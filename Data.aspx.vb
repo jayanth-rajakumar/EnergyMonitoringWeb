@@ -9,15 +9,15 @@ Partial Class Data
     Inherits System.Web.UI.Page
 
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
-        Session("username_sval") = "5CCF7FB0F47F"
+        ' Session("username_sval") = "5CCF7FB0F47F"
         Label1.Text = "MAC ID: " & Session("username_sval")
 
 
 
-    
+
 
     End Sub
-  
+
 
     Sub cleartable(a As String)
         Dim con = New OleDbConnection("PROVIDER=Microsoft.Jet.OLEDB.4.0;" + "DATA SOURCE=" + Server.MapPath("Users.mdb"))
@@ -51,7 +51,7 @@ Partial Class Data
             Try
                 oledbAdapter.Fill(ds)
             Catch ex As Exception
-                MsgBox(query)
+                Response.Write("<script>alert('" & query & "');</script>")
             End Try
             For k As Integer = 1 To Table1.Rows.Count - 1
                 Table1.Rows.RemoveAt(1)
@@ -106,17 +106,15 @@ Partial Class Data
             Dim unixTimestamp1 = (s1DateTime.Subtract(New DateTime(1970, 1, 1))).TotalSeconds - 330 * 60
             Dim unixTimestamp2 = (s2DateTime.Subtract(New DateTime(1970, 1, 1))).TotalSeconds - 330 * 60
 
-            MsgBox(unixTimestamp1)
-            MsgBox(unixTimestamp2)
-
             Dim con = New OleDbConnection("PROVIDER=Microsoft.Jet.OLEDB.4.0;" + "DATA SOURCE=" + Server.MapPath("Users.mdb"))
             Dim sz As String = DropDownList1.SelectedItem.Text
+
             If sz = "Energy" Then
                 sz = "ActivePower"
             End If
             Dim query As String = "SELECT * from " & sz & " where User='" & Session("username_sval") & "' and Timestamp>" & unixTimestamp1 & " and Timestamp<" & unixTimestamp2
-            'MsgBox(query)
 
+            '  MsgBox(query)
             Dim oledbAdapter As OleDbDataAdapter
             Dim ds As New DataSet
             con.Open()
@@ -124,11 +122,13 @@ Partial Class Data
             Try
                 oledbAdapter.Fill(ds)
             Catch ex As Exception
-                MsgBox(query)
+                Response.Write("<script>alert('" & query & "');</script>")
+                ' MsgBox(ex.Message)
             End Try
             For k As Integer = 1 To Table1.Rows.Count - 1
                 Table1.Rows.RemoveAt(1)
             Next
+
 
 
             For i = 0 To ds.Tables(0).Rows.Count - 1
@@ -186,7 +186,7 @@ Partial Class Data
 
     End Sub
 
-   
+
 
     Protected Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         Dim strx As String = DD_Year.SelectedItem.Text & "/" & DD_Month.SelectedItem.Text & "/" & DD_Date.SelectedItem.Text & "/" & DD_Hours.SelectedItem.Text & "/" & DD_Minutes.SelectedItem.Text & "/" & DD_Seconds.SelectedItem.Text
@@ -248,7 +248,7 @@ Partial Class Data
                     cmd.ExecuteNonQuery()
                 Catch ex As Exception
                     ' Response.Write("<script>alert('Error');</script>")
-                    MsgBox(cmd.CommandText)
+                    Response.Write("<script>alert('" & cmd.CommandText & "');</script>")
                 End Try
 
                 con.Close()
@@ -257,4 +257,9 @@ skip:
 
         Next
     End Sub
+    Protected Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
+        Response.Redirect("Default.aspx")
+        Session("username_sval") = ""
+    End Sub
+
 End Class

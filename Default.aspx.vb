@@ -43,19 +43,12 @@ Partial Class _Default
 
 
         Dim con = New OleDbConnection("PROVIDER=Microsoft.Jet.OLEDB.4.0;" + "DATA SOURCE=" + Server.MapPath("Users.mdb"))
-
-        Dim cmd As OleDbCommand
-
-
         Dim query As String = "SELECT * from UserLogin where email='" & TextBox1.Text & "'"
         Dim oledbAdapter As OleDbDataAdapter
         Dim ds As New DataSet
         con.Open()
         oledbAdapter = New OleDbDataAdapter(query, con)
         oledbAdapter.Fill(ds)
-        'For i = 0 To ds.Tables(0).Rows.Count - 1
-        'MsgBox(ds.Tables(0).Rows(i).Item(0) & "  --  " & ds.Tables(0).Rows(i).Item(1))
-        '    Next
 
         Dim pwhash As String = ds.Tables(0).Rows(0).Item(1)
 
@@ -79,6 +72,7 @@ Partial Class _Default
             Response.Write("<script>alert('Log in Failed');</script>")
         End If
 
+
         oledbAdapter.Dispose()
         con.Close()
 
@@ -101,11 +95,8 @@ Partial Class _Default
         '  End Try
         '  sqlConnection.Close()
         Dim con = New OleDbConnection("PROVIDER=Microsoft.Jet.OLEDB.4.0;" + "DATA SOURCE=" + Server.MapPath("Users.mdb"))
-
         Dim cmd As OleDbCommand
-
         cmd = New OleDbCommand()
-
         Dim sSourceData As String
         Dim tmpSource() As Byte
         Dim tmpHash() As Byte

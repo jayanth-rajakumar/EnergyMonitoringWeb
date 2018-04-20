@@ -21,7 +21,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "EnergyMonitoringWeb", "http
 		Release.AspNetCompiler.ForceOverwrite = "true"
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
-		SlnRelativePath = "D:\gitworkspace\EnergyMonitoringWeb\"
+		SlnRelativePath = "C:\Users\Jayanth Rajakumar\Desktop\Smart-Plug-Web-master\"
 		DefaultWebSiteLanguage = "Visual Basic"
 	EndProjectSection
 EndProject
